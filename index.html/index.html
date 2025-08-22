@@ -1,0 +1,259 @@
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Comprobante SIAT</title>
+  <style>
+    :root {
+      --bg-color: #f4f6f9;
+      --text-color: #000;
+      --box-color: #fff;
+      --btn-color: #143061;
+    }
+
+    body.dark-mode {
+      --bg-color: #121212;
+      --text-color: #fff;
+      --box-color: #1e1e1e;
+      --btn-color: #0f356e;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      margin: 0;
+      padding: 0;
+      transition: 0.3s;
+    }
+
+    .header {
+      background-color: var(--btn-color);
+      color: white;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-title {
+      display: flex;
+      align-items: center;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+
+    .header-title img {
+      height: 32px;
+      margin-right: 10px;
+    }
+
+    .toggle-mode {
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      color: white;   /* ✅ la luna siempre blanca */
+      cursor: pointer;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 20px auto;
+      background-color: var(--box-color);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .container h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+      color: var(--btn-color);
+    }
+
+    /* ✅ NUEVO estilo para la barra separadora */
+    .separator {
+      border-top: 1px solid #ccc;
+      margin: 10px 0 15px 0;
+    }
+
+    /* ✅ NUEVO estilo para la sección secundaria */
+    .datos-secundarios h3 {
+      font-weight: 300; /* más delgado */
+      text-align: center;
+      font-size: 1rem;
+      color: #555;
+      margin: 8px 0 10px 0;
+    }
+
+    .dato {
+      display: flex;
+      align-items: center;
+      margin: 15px 0;
+      cursor: default;
+    }
+
+    .icono {
+      width: 24px;
+      height: 24px;
+      margin-right: 12px;
+    }
+
+    .dato-texto {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dato-label {
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .dato-value {
+      font-weight: 400;
+      font-size: 0.95rem;
+      margin-top: 2px;
+      word-break: break-word;
+    }
+
+    .btn {
+      background-color: var(--btn-color);
+      color: white;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .btn img {
+      width: 18px;
+      height: 18px;
+      margin-right: 8px;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        margin: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🔷 ENCABEZADO -->
+  <div class="header">
+    <div class="header-title">
+      <img src="LOGOTIPO.jpg" alt="Logo SIAT" />
+      siat
+    </div>
+    <!-- ✅ Luna mirando al otro lado 🌜 en blanco -->
+    <button class="toggle-mode" onclick="toggleDarkMode()">🌜</button>
+  </div>
+
+  <!-- 📄 COMPROBANTE -->
+  <div class="container" id="comprobante">
+    <h2>Datos del Comprobante QR</h2>
+
+    <!-- ✅ NUEVA SECCIÓN JUSTO DEBAJO DEL TÍTULO -->
+    <div class="separator"></div>
+    <div class="datos-secundarios">
+      <h3>Datos del comprobante</h3>
+    </div>
+
+    <div class="dato">
+      <img src="razon.jpg" class="icono" />
+      <div class="dato-texto">
+        <div class="dato-label">Razón Social</div>
+        <div class="dato-value" id="razon">LUIS ENRIQUE LOPEZ TORREZ</div>
+      </div>
+    </div>
+
+    <div class="dato">
+      <img src="nit.jpg" class="icono" />
+      <div class="dato-texto">
+        <div class="dato-label">NIT</div>
+        <div class="dato-value">2282941011</div>
+      </div>
+    </div>
+
+    <div class="dato">
+      <img src="tramite.jpg" class="icono" />
+      <div class="dato-texto">
+        <div class="dato-label">Número de Trámite</div>
+        <div class="dato-value" id="tramite"></div>
+      </div>
+    </div>
+
+    <div class="dato">
+      <img src="monto.jpg" class="icono" />
+      <div class="dato-texto">
+        <div class="dato-label">Monto Total Bs.</div>
+        <div class="dato-value" id="monto">2774.02</div>
+      </div>
+    </div>
+
+    <div class="dato">
+      <img src="sus.jpg" class="icono" />
+      <div class="dato-texto">
+        <div class="dato-label">Monto Total Sus.</div>
+        <div class="dato-value">0</div>
+      </div>
+    </div>
+
+    <div class="dato">
+      <img src="fecha.jpg" class="icono" />
+      <div class="dato-texto">
+        <div class="dato-label">Fecha Pago</div>
+        <div class="dato-value" id="fecha">07/07/2025</div>
+      </div>
+    </div>
+
+    <div class="dato">
+      <img src="estado.jpg" class="icono" />
+      <div class="dato-texto">
+        <div class="dato-label">Estado</div>
+        <div class="dato-value" id="estado">PAGADO</div>
+      </div>
+    </div>
+
+    <!-- ✅ BOTÓN IMPRIMIR -->
+    <button class="btn" onclick="descargarPDF()">
+      <img src="impresora.jpg" alt="Imprimir" />
+      IMPRIMIR COMPROBANTE PAGO
+    </button>
+  </div>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      const icon = document.querySelector('.toggle-mode');
+      icon.innerText = document.body.classList.contains('dark-mode') ? '☀️' : '🌜';
+    }
+
+    function descargarPDF() {
+      const link = document.createElement('a');
+      link.href = 'archivocomprobante.pdf';
+      link.download = 'Comprobante_Pago.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
